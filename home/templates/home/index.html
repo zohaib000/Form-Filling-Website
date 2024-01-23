@@ -107,11 +107,13 @@ canvas#signature-pad {
 
 
 
-
+.form-control{
+    height: auto!important;
+}
 
 
 /*  custom styling for boxes */
-input[type="text"],input[type="time"],input[type="date"],textarea,canvas{
+input[type="text"],input[type="time"],input[type="date"],textarea,canvas,input[type="datetime-local"]{
       background: #6c757d14!important;
 }
 
@@ -158,7 +160,7 @@ label{
     <div class="col-sm-4">
       <div class="form-group">
         <label for="">Customer:</label>
-        <input type="text" name="customer" class="form-control form-control-lg" placeholder="Name,Location,Site #" />
+        <input type="text" name="customer" class="form-control form-control-lg" placeholder="Name, Location, Site #" />
       </div>
     </div>
   
@@ -184,7 +186,7 @@ label{
     <div class="col-sm-4">
       <div class="form-group">
         <label for="">Clock In:</label>
-        <input type="time" name="timeIn" class="form-control form-control-lg" placeholder="" />
+        <input type="datetime-local" name="timeIn" class="form-control form-control-lg" placeholder="" />
       </div>
     </div>
   
@@ -192,7 +194,7 @@ label{
     <div class="col-sm-4">
       <div class="form-group">
         <label for="">Clock Out:</label>
-        <input type="time" name="timeOut" class="form-control form-control-lg" placeholder="" onchange="calculateTimeDifference()"/>
+        <input type="datetime-local" name="timeOut" class="form-control form-control-lg" placeholder="" onchange="calculateTimeDifference()"/>
       </div>
     </div>
 
@@ -277,17 +279,7 @@ label{
 
 
   <!-- ? Row - 9 -->
-  <!-- <div class="row">
-    <div class="col-6">
-  <label for="">Contractor/Tech Signature:</label>
-  <div class="flex-row">
-    <div class="wrapper">
-      <canvas id="signature-pad" width="400" height="200" name="signature"></canvas>
-    </div>
-  </div>
-  <button type="button" id="clear" class="btn btn-primary btn-lg btn-get-started fs-2 p-3 mt-4 w-50">Reset</button>
-    </div>
-  </div> -->
+
 
   <div class="row">
     <div class="col-6">
@@ -324,20 +316,17 @@ label{
 
 {% block Script %}
 
-
-<!-- script for time calculation -->
 <script>
   function calculateTimeDifference() {
-    // Get the time values from the input fields
-    const timeIn = document.querySelector("input[name=timeIn]").value;
-    const timeOut = document.querySelector("input[name=timeOut]").value;
+    const dateTimeIn = document.querySelector("input[name=timeIn]").value;
+    const dateTimeOut = document.querySelector("input[name=timeOut]").value;
 
-    // Convert time values to Date objects
-    const dateIn = new Date(`2000-01-01T${timeIn}`);
-    const dateOut = new Date(`2000-01-01T${timeOut}`);
+    // Convert datetime strings to Date objects
+    const dateInObject = new Date(dateTimeIn);
+    const dateOutObject = new Date(dateTimeOut);
 
     // Calculate the time difference in milliseconds
-    const timeDiff = dateOut - dateIn;
+    const timeDiff = dateOutObject - dateInObject;
 
     // Ensure the time difference is positive
     const positiveTimeDiff = Math.abs(timeDiff);
@@ -349,6 +338,7 @@ label{
     document.querySelector("input[name=totalTime]").value = hoursDiff.toFixed(2);
   }
 </script>
+
 
 
 
